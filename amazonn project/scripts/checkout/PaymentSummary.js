@@ -70,6 +70,9 @@ export function renderPaymentSummary() {
     const order = await response.json();
     console.log('Order placed successfully:', order);
     addOrder(order);
+    // reseting cart after placing order
+    localStorage.setItem('cart', JSON.stringify([]));
+
     // navigate only after successful placement and storing
     window.location.href = 'orders.html';
   } catch (error) {

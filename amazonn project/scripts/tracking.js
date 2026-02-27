@@ -1,6 +1,7 @@
 import { loadProductsFetch } from "../data/products.js";
 import { orders } from "../data/orders data.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { bindSearchBar } from "./utils/searchBar.js";
 
 const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
@@ -107,22 +108,7 @@ async function generateTrackingHtml() {
   }, 0); //allows css animation to play by using setTimeout
 
   //adding event listenrs for search bar
-  const searchBar = document.querySelector('.js-search-bar');
-  searchBar.addEventListener('keydown', (event) => {
-    // Check if the key pressed was 'Enter'
-    if (event.key === 'Enter') {
-      const searchTerm = searchBar.value.trim(); // .trim() removes spaces from start/end
-
-      // Only run if the search term is NOT empty
-      if (searchTerm !== '') {
-        // 1. Simple redirect (per your request)
-        // window.location.href = `amazon.html?search='${searchTerm}`; could cause error if user eneterd special characters like & / = 
-
-        // 2. OR: If you want to actually pass the search text to the new page:
-        window.location.href = `amazon.html?search=${encodeURIComponent(searchTerm)}`;
-      }
-    }
-  });
+  bindSearchBar();
 }
 
 

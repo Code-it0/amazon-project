@@ -1,7 +1,6 @@
 import { getcart, addToCart } from "../data/cart.js";
-import { products, loadProductsFetch } from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
-import { updateCartCounter } from "./utils/cartCounters.js";
+import { products, loadProductsFetch } from "../data/products.js";import { updateCartCounter } from "./utils/cartCounters.js";
+import { bindSearchBar } from "./utils/searchBar.js";
 
 console.log("Amazon project script loaded");
 // creating a function that uses the product data to generate HTML
@@ -83,22 +82,7 @@ function generateProductHTML(products) {
   });
 
   //adding event listener for search bar
-  const searchBar = document.querySelector('.js-search-bar');
-  searchBar.addEventListener('keydown', (event) => {
-    // Check if the key pressed was 'Enter'
-    if (event.key === 'Enter') {
-      const searchTerm = searchBar.value.trim(); // .trim() removes spaces from start/end
-
-      // Only run if the search term is NOT empty
-      if (searchTerm !== '') {
-        // 1. Simple redirect (per your request)
-        // window.location.href = `amazon.html?search='${searchTerm}`; could cause error if user eneterd special characters like & / = 
-
-        // 2. OR: If you want to actually pass the search text to the new page:
-        window.location.href = `amazon.html?search=${encodeURIComponent(searchTerm)}`;
-      }
-    }
-  });
+  bindSearchBar();
 }
 
 
