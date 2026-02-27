@@ -7,9 +7,9 @@ const url = new URL(window.location.href);
 const orderId = url.searchParams.get('orderId');
 const productId = url.searchParams.get('productId');
 
-const order = orders.find(order => order.id === orderId);
 
 async function generateTrackingHtml() {
+  const order = orders.find(order => order.id === orderId);
   // 1. FIX: Use await to ensure products are loaded BEFORE generating HTML
   let products;
   try {
@@ -18,10 +18,15 @@ async function generateTrackingHtml() {
     console.error('Error loading products:', error);
     return;
   }
-
+  
   // Now we have the products, we can find the specific one
   const product = products.find(product => product.id === productId);
-
+  
+  if (!order || !product) { //if someone messes up the prameters in the url , the .find() will return undefined hence gotta check for it 
+    console.error('Order not found');
+    document.querySelector('.main').innerHTML = '<h1>Order not found</h1><a href="orders.html">Go back</a>';
+    return;
+  }
   // Check if product exists to avoid crashing
   if (!product) {
     console.error('Product not found');
